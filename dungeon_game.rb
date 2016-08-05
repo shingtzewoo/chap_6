@@ -1,36 +1,55 @@
 class Dungeon
   attr_accessor :player
+
+  player_in_dungeon = true
+  while player_in_dungeon
+    answer = gets.chomp
+    case answer
+      when answer == go
+        puts "Which direction would you like to go?"
+      when
+    end
+  end
+
   def initialize(player_name)
     @player = Player.new(player_name)
     @rooms = []
   end
+
   def add_room(reference, name, description, connections)
     @rooms << Room.new(reference, name, description, connections)
   end
+
   def start(location)
     @player.location = location
     show_current_description
   end
+
   def show_current_description
     puts find_room_in_dungeon(@player.location).full_description
   end
+
   def find_room_in_dungeon(reference)
     @rooms.detect { |room| room.reference == reference }
   end
+
   def find_room_in_direction(direction)
     find_room_in_dungeon(@player.location).connections[direction]
   end
+
   def go(direction)
     puts "You go " + direction.to_s
     @player.location = find_room_in_direction(direction)
     show_current_description
   end
+
   class Player
     attr_accessor :name, :location
     def initialize(name)
       @name = name
     end
   end
+
   class Room
     attr_accessor :reference, :name, :description, :connections
     def initialize(reference, name, description, connections)
@@ -43,6 +62,8 @@ class Dungeon
       @name + "\n\nYou are in " + @description
     end
   end
+
+  private :find_room_in_dungeon, :find_room_in_direction,
 end
 
 # Create the main dungeon object
